@@ -22,7 +22,7 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
     JList comicSelList, comicDispList;
     JComboBox numCopyDropDown;
     JRadioButton withinRadio, outsideRadio;
-    String temp = "", visPassword = "";
+    String tempStr = "", visPasswordStr = "", passwordStr = "";
     
     
     Vector comicSelVec, numCopyVec, comicDispVec, marvelVec, dcVec, otherVec; 
@@ -54,7 +54,7 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
         clearBut = new JButton ("Clear");
         clearAllBut = new JButton ("Clear All");
         submitBut = new JButton ("Submit");
-        passwordText = new JLabel(visPassword);
+        passwordText = new JLabel(visPasswordStr);
         keypadInsText = new JLabel("Use Keypad to enter password for settings");
         totalText = new JLabel ("Total:");
         enterCCText = new JLabel ("Enter credit card number:");
@@ -87,18 +87,18 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
         }
         for (int i = 0; i < 19; i++)
         {
-            temp = cl.cmicList[i].getStrComicTitle() + " Vol: " + cl.cmicList[i].getIntComicVol() + " #. " + cl.cmicList[i].getIntComicIssue() + " Pub: " + cl.cmicList[i].getStrComicPub();           
+            tempStr = cl.cmicList[i].getStrComicTitle() + " Vol: " + cl.cmicList[i].getIntComicVol() + " #. " + cl.cmicList[i].getIntComicIssue() + " Pub: " + cl.cmicList[i].getStrComicPub();           
             if (cl.cmicList[i].getChComicPubType() == 'd')
             {
-                dcVec.add(temp);
+                dcVec.add(tempStr);
             }
             else if (cl.cmicList[i].getChComicPubType() == 'm')
             {
-                marvelVec.add(temp);
+                marvelVec.add(tempStr);
             }
             else
             {
-                otherVec.add(temp);
+                otherVec.add(tempStr);
             }
         }
         for (int i = 0; i < JBut.length; i++)
@@ -205,92 +205,95 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
 
     public void actionPerformed (ActionEvent e)
     {
-        String password = "";
+        //Vector password = new Vector(4);
+        
         if (e.getSource() instanceof JButton)
         {
+            
             if (e.getSource() == buyBut)
             {
 
             }
             else if (e.getSource() == JBut[0])
             {
-                password += "a";
-                visPassword += "*";
-                passwordText.setText(visPassword);
+                passwordStr += "a";
+                visPasswordStr += "*";
+                passwordText.setText(visPasswordStr);
             }
             else if (e.getSource() == JBut[1])
             {
-                password += "b";
-                visPassword += "*";
-                passwordText.setText(visPassword);
+                passwordStr += "b";
+                visPasswordStr += "*";
+                passwordText.setText(visPasswordStr);
             }
             else if (e.getSource() == JBut[2])
             {
-                password += "c";
-                visPassword += "*";
-                passwordText.setText(visPassword);
+                passwordStr += "c";
+                visPasswordStr += "*";
+                passwordText.setText(visPasswordStr);
             }
             else if (e.getSource() == JBut[3])
             {
-                password += "d";
-                visPassword += "*";
-                passwordText.setText(visPassword);
+                passwordStr += "d";
+                visPasswordStr += "*";
+                passwordText.setText(visPasswordStr);
             }
             else if (e.getSource() == JBut[4])
             {
-                password += "e";
-                visPassword += "*";
-                passwordText.setText(visPassword);
+                passwordStr += "d";
+                visPasswordStr += "*";
+                passwordText.setText(visPasswordStr);
             }
             else if (e.getSource() == JBut[5])
             {
-                password += "f";
-                visPassword += "*";
-                passwordText.setText(visPassword);
+                passwordStr += "e";
+                visPasswordStr += "*";
+                passwordText.setText(visPasswordStr);
             }
             else if (e.getSource() == JBut[6])
             {
-                password += "g";
-                visPassword += "*";
-                passwordText.setText(visPassword);
+                passwordStr += "f";
+                visPasswordStr += "*";
+                passwordText.setText(visPasswordStr);
             }
             else if (e.getSource() == JBut[7])
             {
-                password += "h";
-                visPassword += "*";
-                passwordText.setText(visPassword);
+                passwordStr += "g";
+                visPasswordStr += "*";
+                passwordText.setText(visPasswordStr);
             }
             else if (e.getSource() == JBut[8])
             {
-                password += "i";
-                visPassword += "*";
-                passwordText.setText(visPassword);
+                passwordStr += "h";
+                visPasswordStr += "*";
+                passwordText.setText(visPasswordStr);
             }
             else if (e.getSource() == JBut[9])
             {
-                password += "j";
-                visPassword += "*";
-                passwordText.setText(visPassword);
+                passwordStr += "i";
+                visPasswordStr += "*";
+                passwordText.setText(visPasswordStr);
             }
             else if (e.getSource() == enterBut)
             {
-                if (password == "abcd")
+                passwordText.setText(passwordStr);
+                if (passwordStr.compareTo("abcd") == 0)
                 {
-
+                    JOptionPane.showMessageDialog(null, "Well done!");
                 }
-                else
+                else 
                 {
                     JOptionPane.showMessageDialog(null, "Wrong password, please re-enter", "Not Allowed", JOptionPane.ERROR_MESSAGE);
-                    password = "";
-                    visPassword = "";
-                    passwordText.setText(visPassword);
+                    passwordStr = "";
+                    visPasswordStr = "";
+                    passwordText.setText(visPasswordStr);
                 }
             }
             else if (e.getSource() == resetBut)
             {
-                password = "";
-                visPassword = "";
-                passwordText.setText(visPassword);
+                //password.clear();
+                visPasswordStr = "";
+                passwordText.setText(visPasswordStr);
             }
             else if (e.getSource() == clearBut)
             {
