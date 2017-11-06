@@ -1,3 +1,14 @@
+/*
+To Do List:
+Add a Vector or Array to keep track of the original index for each item added to the selected list
+Add a Vector or Array to keep track of stock as things go so that as different comics are added, can reset back to that when clear is hit
+Finish ClearButton so that the stock resets properly
+Add Functionality to ClearAllButton
+Add Functionality to SubmitButton
+After entering the password, clear all forms and then open up UpdateFrame
+Add Comments to help distinguish
+Make sure that formatting is right
+*/
 import javax.swing.*;
 import java.awt.*;
 import java.text.*;
@@ -697,7 +708,6 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
             {
                 if (comicDispList.isSelectionEmpty() == true)
                 {
-
                 }
                 else
                 {
@@ -816,7 +826,6 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
             }
             else
             {
-
             }
         }
     }
@@ -825,7 +834,6 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
     {
         if (comicDispList.isSelectionEmpty() == true)
         {
-
         }
         else
         {
@@ -876,14 +884,12 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
                 comicPic.setText(info);
                 comicPic.setIcon(null);
             }
-            
         }
     }
     public void mouseExited(MouseEvent e)
     {
         if (comicDispList.isSelectionEmpty() == true)
         {
-
         }
         else
         {
@@ -941,7 +947,6 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
                 comicPic.setIcon(new ImageIcon(imageName));
                 comicPic.setText(null); 
             }
-            
         }
     }
     public void mouseReleased(MouseEvent e)
@@ -965,6 +970,5 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
         cb.setTitle("Kobza and Mennie's Comic Buy App");
         cb.setSize(1366,768);
         cb.setVisible(true);
-    }
-    
+    }  
 }
