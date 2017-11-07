@@ -425,6 +425,7 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
                 visPasswordStr += "*";
                 passwordText.setText(visPasswordStr);
             }
+            //change to e
             else if (e.getSource() == JBut[4])
             {
                 passwordStr += "d";
