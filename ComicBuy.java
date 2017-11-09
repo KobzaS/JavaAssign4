@@ -2,8 +2,6 @@
 To Do List:
 Add a Vector or Array to keep track of the original index for each item added to the selected list
 Add a Vector or Array to keep track of stock as things go so that as different comics are added, can reset back to that when clear is hit
-Finish ClearButton so that the stock resets properly
-Add Functionality to ClearAllButton
 Add Functionality to SubmitButton
 After entering the password, clear all forms and then open up UpdateFrame
 Add Comments to help distinguish
@@ -37,7 +35,8 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
     TitledBorder comicPicBorder;
     ButtonGroup delivery;
     double deliveryFee = 3.95, totalPrice = 0;
-    Vector comicSelVec, numCopyVec, comicDispVec, marvelVec, dcVec, otherVec, indexVec, totalPriceVec; 
+    Vector comicSelVec, numCopyVec, comicDispVec, marvelVec, dcVec, otherVec, indexVec, totalPriceVec, stockVec, selectIndexVec, tempSelVec, purchPriceVec;
+    DecimalFormat twoDec; 
     
     Container con;
     
@@ -97,6 +96,11 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
         comicPicBorder = new TitledBorder("None");
         delivery = new ButtonGroup();
         totalPriceVec = new Vector();
+        stockVec = new Vector();
+        selectIndexVec = new Vector();
+        tempSelVec = new Vector();
+        purchPriceVec = new Vector();
+        twoDec = new DecimalFormat("0.00");
 
         for (int i = 1; i < 8; i++)
         {
@@ -270,16 +274,16 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
                     {
                         pricePer = cl.cmicList[index].getDoubComicPrice();
                         totalPrice += pricePer*numCopy;
-                        selectedObj = info + " (" + numCopy + ") $" + totalPrice; 
+                        purchPriceVec.add(pricePer*numCopy);
+                        selectedObj = info + " (" + numCopy + ") $" + pricePer*numCopy; 
                         comicSelVec.add(selectedObj);
                         comicSelList.setListData(comicSelVec);
+                        stockVec.add(numCopy);
+                        selectIndexVec.add(index);
                         cl.cmicList[index].setIntComicStock(stock - numCopy);
-                        stockUpd = cl.cmicList[index].getIntComicStock();
-                        stockStr = Integer.toString(stockUpd);
-                        stockText.setText("Stock: " + stockStr);
-                        totalPriceVec.add(totalPrice);
+                        stockText.setText("Stock: " + Integer.toString(stock-numCopy));
                         delivered = totalPrice + deliveryFee;
-                        totalText.setText("Total: $" + totalPrice + " plus Delivery is: $" + delivered);
+                        totalText.setText("Total: $" + twoDec.format(totalPrice) + " plus Delivery is: $" + twoDec.format(delivered));
                     }
                 }
                 else if (dcBox.isSelected() == true && marvelBox.isSelected() == true)
@@ -289,16 +293,16 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
                     {
                         pricePer = cl.cmicList[index].getDoubComicPrice();
                         totalPrice += pricePer*numCopy;
-                        selectedObj = info + " (" + numCopy + ") $" + totalPrice; 
+                        purchPriceVec.add(pricePer*numCopy);
+                        selectedObj = info + " (" + numCopy + ") $" + pricePer*numCopy; 
                         comicSelVec.add(selectedObj);
                         comicSelList.setListData(comicSelVec);
+                        stockVec.add(numCopy);
+                        selectIndexVec.add(index);
                         cl.cmicList[index].setIntComicStock(stock - numCopy);
-                        stockUpd = cl.cmicList[index].getIntComicStock();
-                        stockStr = Integer.toString(stockUpd);
-                        stockText.setText("Stock: " + stockStr);
-                        totalPriceVec.add(totalPrice);
+                        stockText.setText("Stock: " + Integer.toString(stock-numCopy));
                         delivered = totalPrice + deliveryFee;
-                        totalText.setText("Total: $" + totalPrice + " plus Delivery is: $" + delivered);
+                        totalText.setText("Total: $" + twoDec.format(totalPrice) + " plus Delivery is: $" + twoDec.format(delivered));
                     }
                 }
                 else if (marvelBox.isSelected() == true && otherBox.isSelected() == true)
@@ -309,16 +313,16 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
                     {
                         pricePer = cl.cmicList[index].getDoubComicPrice();
                         totalPrice += pricePer*numCopy;
-                        selectedObj = info + " (" + numCopy + ") $" + totalPrice; 
+                        purchPriceVec.add(pricePer*numCopy);
+                        selectedObj = info + " (" + numCopy + ") $" + pricePer*numCopy; 
                         comicSelVec.add(selectedObj);
                         comicSelList.setListData(comicSelVec);
+                        stockVec.add(numCopy);
+                        selectIndexVec.add(index);
                         cl.cmicList[index].setIntComicStock(stock - numCopy);
-                        stockUpd = cl.cmicList[index].getIntComicStock();
-                        stockStr = Integer.toString(stockUpd);
-                        stockText.setText("Stock: " + stockStr);
-                        totalPriceVec.add(totalPrice);
+                        stockText.setText("Stock: " + Integer.toString(stock-numCopy));
                         delivered = totalPrice + deliveryFee;
-                        totalText.setText("Total: $" + totalPrice + " plus Delivery is: $" + delivered);
+                        totalText.setText("Total: $" + twoDec.format(totalPrice) + " plus Delivery is: $" + twoDec.format(delivered));
                     }
                 }
                 else if (marvelBox.isSelected() == true)
@@ -329,16 +333,16 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
                     {
                         pricePer = cl.cmicList[index].getDoubComicPrice();
                         totalPrice += pricePer*numCopy;
-                        selectedObj = info + " (" + numCopy + ") $" + totalPrice; 
+                        purchPriceVec.add(pricePer*numCopy);
+                        selectedObj = info + " (" + numCopy + ") $" + pricePer*numCopy; 
                         comicSelVec.add(selectedObj);
                         comicSelList.setListData(comicSelVec);
+                        stockVec.add(numCopy);
+                        selectIndexVec.add(index);
                         cl.cmicList[index].setIntComicStock(stock - numCopy);
-                        stockUpd = cl.cmicList[index].getIntComicStock();
-                        stockStr = Integer.toString(stockUpd);
-                        stockText.setText("Stock: " + stockStr);
-                        totalPriceVec.add(totalPrice);
+                        stockText.setText("Stock: " + Integer.toString(stock-numCopy));
                         delivered = totalPrice + deliveryFee;
-                        totalText.setText("Total: $" + totalPrice + " plus Delivery is: $" + delivered);
+                        totalText.setText("Total: $" + twoDec.format(totalPrice) + " plus Delivery is: $" + twoDec.format(delivered));
                     }
                 }
                 else if (otherBox.isSelected() == true)
@@ -350,16 +354,16 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
                     {
                         pricePer = cl.cmicList[index].getDoubComicPrice();
                         totalPrice += pricePer*numCopy;
-                        selectedObj = info + " (" + numCopy + ") $" + totalPrice; 
+                        purchPriceVec.add(pricePer*numCopy);
+                        selectedObj = info + " (" + numCopy + ") $" + pricePer*numCopy; 
                         comicSelVec.add(selectedObj);
                         comicSelList.setListData(comicSelVec);
+                        stockVec.add(numCopy);
+                        selectIndexVec.add(index);
                         cl.cmicList[index].setIntComicStock(stock - numCopy);
-                        stockUpd = cl.cmicList[index].getIntComicStock();
-                        stockStr = Integer.toString(stockUpd);
-                        stockText.setText("Stock: " + stockStr);
-                        totalPriceVec.add(totalPrice);
+                        stockText.setText("Stock: " + Integer.toString(stock-numCopy));
                         delivered = totalPrice + deliveryFee;
-                        totalText.setText("Total: $" + totalPrice + " plus Delivery is: $" + delivered);
+                        totalText.setText("Total: $" + twoDec.format(totalPrice) + " plus Delivery is: $" + twoDec.format(delivered));
                     }
                 }
                 else if (dcBox.isSelected() == true)
@@ -369,16 +373,16 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
                     {
                         pricePer = cl.cmicList[index].getDoubComicPrice();
                         totalPrice += pricePer*numCopy;
-                        selectedObj = info + " (" + numCopy + ") $" + totalPrice; 
+                        purchPriceVec.add(pricePer*numCopy);
+                        selectedObj = info + " (" + numCopy + ") $" + pricePer*numCopy; 
                         comicSelVec.add(selectedObj);
                         comicSelList.setListData(comicSelVec);
+                        stockVec.add(numCopy);
+                        selectIndexVec.add(index);
                         cl.cmicList[index].setIntComicStock(stock - numCopy);
-                        stockUpd = cl.cmicList[index].getIntComicStock();
-                        stockStr = Integer.toString(stockUpd);
-                        stockText.setText("Stock: " + stockStr);
-                        totalPriceVec.add(totalPrice);
+                        stockText.setText("Stock: " + Integer.toString(stock-numCopy));
                         delivered = totalPrice + deliveryFee;
-                        totalText.setText("Total: $" + totalPrice + " plus Delivery is: $" + delivered);
+                        totalText.setText("Total: $" + twoDec.format(totalPrice) + " plus Delivery is: $" + twoDec.format(delivered));
                     }
                 }   
                 else
@@ -388,16 +392,16 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
                     {
                         pricePer = cl.cmicList[index].getDoubComicPrice();
                         totalPrice += pricePer*numCopy;
-                        selectedObj = info + " (" + numCopy + ") $" + totalPrice; 
+                        purchPriceVec.add(pricePer*numCopy);
+                        selectedObj = info + " (" + numCopy + ") $" + pricePer*numCopy; 
                         comicSelVec.add(selectedObj);
                         comicSelList.setListData(comicSelVec);
+                        stockVec.add(numCopy);
+                        selectIndexVec.add(index);
                         cl.cmicList[index].setIntComicStock(stock - numCopy);
-                        stockUpd = cl.cmicList[index].getIntComicStock();
-                        stockStr = Integer.toString(stockUpd);
-                        stockText.setText("Stock: " + stockStr);
-                        totalPriceVec.add(totalPrice);
+                        stockText.setText("Stock: " + Integer.toString(stock-numCopy));
                         delivered = totalPrice + deliveryFee;
-                        totalText.setText("Total: $" + totalPrice + " plus Delivery is: $" + delivered);
+                        totalText.setText("Total: $" + twoDec.format(totalPrice) + " plus Delivery is: $" + twoDec.format(delivered));
                     }
                 }
             }
@@ -487,30 +491,63 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
             {
                 if (comicSelList.isSelectionEmpty() == true)
                 {
-                    JOptionPane.showMessageDialog(null, "No comics Selected", "Not Allowed", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "No Comics Selected", "Not Allowed", JOptionPane.ERROR_MESSAGE);
                 }
                 else
                 {
-                    int index;
+                    int selIndex, comicIndex, cmicStock, tempSelIndex;
                     double clearPrice, delivered;
-                    String clearPriceStr;
-                    index = comicSelList.getSelectedIndex();
-                    comicSelVec.remove(index);
-                    clearPrice = (Double)totalPriceVec.get(index);
+                    String tempSelStr;
+                    selIndex = comicSelList.getSelectedIndex();
+                    comicIndex = (Integer)selectIndexVec.get(selIndex);
+                    clearPrice = (Double)purchPriceVec.get(selIndex);
+                    comicSelVec.remove(selIndex);
                     passwordText.setText(Double.toString(clearPrice));
                     totalPrice -= clearPrice;
                     comicSelList.setListData(comicSelVec);
+                    cmicStock = cl.cmicList[comicIndex].getIntComicStock();
+                    cl.cmicList[comicIndex].setIntComicStock(cmicStock + (Integer)stockVec.get(selIndex));
                     if (comicSelVec.size() < 1)
                     {
                         deliveryFee = 0;
                     }
                     delivered = totalPrice + deliveryFee;
-                    totalText.setText("Total: $" + totalPrice + " plus Delivery is: $" + delivered);
+                    totalText.setText("Total: $" + twoDec.format(totalPrice) + " plus Delivery is: $" + twoDec.format(delivered));
+                    comicDispList.clearSelection();
+                    comicPic.setIcon(null);
+                    priceText.setText("Price: ");
+                    numCopyDropDown.setSelectedIndex(-1);
+                    
                 }
             }
             else if (e.getSource() == clearAllBut)
             {
-                
+                if (comicSelVec.size() == 0)
+                {
+                    JOptionPane.showMessageDialog(null, "No Comics Selected", "Not Allowed", JOptionPane.ERROR_MESSAGE);
+                }
+                else
+                {
+                    int tempIndex, tempStock;
+                    double delivered;
+                    for (int i = 0; i < comicSelVec.size(); i++)
+                    {
+                        tempIndex = (Integer)selectIndexVec.get(i);
+                        tempStock = cl.cmicList[tempIndex].getIntComicStock();
+                        cl.cmicList[tempIndex].setIntComicStock(tempStock+(Integer)stockVec.get(i));
+                        totalPrice -= (Double)purchPriceVec.get(i);
+                    }
+                    comicSelVec.clear();
+                    comicSelList.setListData(comicSelVec);
+                    deliveryFee = 0;
+                    delivered = totalPrice + deliveryFee;
+                    totalText.setText("Total: $" + twoDec.format(totalPrice) + " plus Delivery is: $" + twoDec.format(delivered));
+                    comicDispList.clearSelection();
+                    comicPic.setIcon(null);
+                    priceText.setText("Price: ");
+                    numCopyDropDown.setSelectedIndex(-1);
+
+                }
             }
             else if (e.getSource() == submitBut)
             {
@@ -571,18 +608,7 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
                 }
                 else
                 {
-                    for (int i = 0; i < dcVec.size(); i++)
-                    {
-                        comicDispVec.remove(dcVec.get(i));
-                    }
-                    for (int i = 0; i < marvelVec.size(); i++)
-                    {
-                        comicDispVec.remove(marvelVec.get(i));
-                    }         
-                    for (int i = 0; i < otherVec.size(); i++)
-                    {
-                        comicDispVec.remove(otherVec.get(i));
-                    }
+                    comicDispVec.clear();
                     comicDispList.setListData(comicDispVec);
                 }
             }
@@ -679,7 +705,7 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
             {
                 if (deliveryFee > 0)
                 {
-                    deliveryFee -= 7.52;
+                    deliveryFee = 0;
                 }
                 deliveryFee += 3.95;
                 double delivered = totalPrice + deliveryFee;
@@ -687,10 +713,7 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
             }
             else if (outsideRadio.isSelected() == true)
             {
-                if (deliveryFee > 0)
-                {
-                    deliveryFee -= 3.95;
-                }
+                deliveryFee = 0;
                 deliveryFee += 7.52;
                 double delivered = totalPrice + deliveryFee;
                 totalText.setText("Total: $" + totalPrice + " plus Delivery is: $" + delivered);
