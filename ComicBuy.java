@@ -432,37 +432,37 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
             //change to e
             else if (e.getSource() == JBut[4])
             {
-                passwordStr += "d";
+                passwordStr += "e";
                 visPasswordStr += "*";
                 passwordText.setText(visPasswordStr);
             }
             else if (e.getSource() == JBut[5])
             {
-                passwordStr += "e";
+                passwordStr += "f";
                 visPasswordStr += "*";
                 passwordText.setText(visPasswordStr);
             }
             else if (e.getSource() == JBut[6])
             {
-                passwordStr += "f";
+                passwordStr += "g";
                 visPasswordStr += "*";
                 passwordText.setText(visPasswordStr);
             }
             else if (e.getSource() == JBut[7])
             {
-                passwordStr += "g";
+                passwordStr += "h";
                 visPasswordStr += "*";
                 passwordText.setText(visPasswordStr);
             }
             else if (e.getSource() == JBut[8])
             {
-                passwordStr += "h";
+                passwordStr += "i";
                 visPasswordStr += "*";
                 passwordText.setText(visPasswordStr);
             }
             else if (e.getSource() == JBut[9])
             {
-                passwordStr += "i";
+                passwordStr += "j";
                 visPasswordStr += "*";
                 passwordText.setText(visPasswordStr);
             }
@@ -472,6 +472,9 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
                 if (passwordStr.compareTo("abcd") == 0)
                 {
                     JOptionPane.showMessageDialog(null, "Well done!");
+                    passwordStr = "";
+                    visPasswordStr = "";
+                    passwordText.setText(visPasswordStr);
                 }
                 else 
                 {
