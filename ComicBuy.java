@@ -33,6 +33,9 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
     JRadioButton withinRadio, outsideRadio;
     String tempStr = "", visPasswordStr = "", passwordStr = "";
     TitledBorder comicPicBorder;
+    Border lowerBevel, upperBevel;
+    MatteBorder grey;
+    CompoundBorder comicPicBorder2;
     ButtonGroup delivery;
     double deliveryFee = 3.95, totalPrice = 0;
     Vector comicSelVec, numCopyVec, comicDispVec, marvelVec, dcVec, otherVec, indexVec, totalPriceVec, stockVec, selectIndexVec, tempSelVec, purchPriceVec;
@@ -101,6 +104,11 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
         tempSelVec = new Vector();
         purchPriceVec = new Vector();
         twoDec = new DecimalFormat("0.00");
+        grey = new MatteBorder(30,10,10,10,Color.gray);
+        lowerBevel = new BevelBorder(BevelBorder.LOWERED);
+        upperBevel = new BevelBorder(BevelBorder.RAISED);
+        comicPicBorder2 = new CompoundBorder(upperBevel, lowerBevel);
+        
 
         for (int i = 1; i < 8; i++)
         {
@@ -172,8 +180,10 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
         comicSelList.setBorder(new TitledBorder("Your Selection"));
         deliveryPanel.setBorder(new TitledBorder("Delivery"));
         comicDispList.setBorder(new TitledBorder("Comic Title"));
-        comicPic.setBorder(comicPicBorder);
         comicPic.setBackground(Color.YELLOW);
+        comicPicBorder2 = new CompoundBorder(comicPicBorder, comicPicBorder2);
+        comicPic.setBorder(comicPicBorder2);
+        //comicPic.setForeground(Color.YELLOW);
         totalText.setBackground(Color.CYAN);
         totalText.setOpaque(true);
         passwordText.setOpaque(true);
@@ -187,7 +197,7 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
         comicPicBorder.setTitleJustification(TitledBorder.CENTER);
         comicDispList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         comicSelList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        comicPic.setOpaque(true);
+        comicPic.setOpaque(false);
         buyBut.setIcon(new ImageIcon("buyLogo1.gif"));
         comicPic.setHorizontalAlignment(JLabel.CENTER);
         enterBut.setFont(normalFont);
@@ -542,8 +552,8 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
                     }
                     comicSelVec.clear();
                     comicSelList.setListData(comicSelVec);
-                    deliveryFee = 0;
-                    delivered = totalPrice + deliveryFee;
+                    delivered = 0;
+                    totalPrice = 0;
                     totalText.setText("Total: $" + twoDec.format(totalPrice) + " plus Delivery is: $" + twoDec.format(delivered));
                     comicDispList.clearSelection();
                     comicPic.setIcon(null);
@@ -575,7 +585,7 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
                     }
                     else
                     {
-
+                        JOptionPane.showMessageDialog(null, "");
                     }
                 }
                 
@@ -869,12 +879,14 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
             {
                 String info = cl.cmicList[index].getStrComicComment();
                 comicPic.setText(info);
+                comicPic.setVerticalAlignment(SwingConstants.TOP);
                 comicPic.setIcon(null);
             }
             else if (dcBox.isSelected() == true && marvelBox.isSelected() == true)
             {
                 String info = cl.cmicList[index].getStrComicComment();
                 comicPic.setText(info);
+                comicPic.setVerticalAlignment(SwingConstants.TOP);
                 comicPic.setIcon(null);
             }
             else if (marvelBox.isSelected() == true && otherBox.isSelected() == true)
@@ -882,6 +894,7 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
                 index += dcVec.size();
                 String info = cl.cmicList[index].getStrComicComment();
                 comicPic.setText(info);
+                comicPic.setVerticalAlignment(SwingConstants.TOP);
                 comicPic.setIcon(null);
             }
             else if (marvelBox.isSelected() == true)
@@ -889,6 +902,7 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
                 index += dcVec.size();
                 String info = cl.cmicList[index].getStrComicComment();
                 comicPic.setText(info);
+                comicPic.setVerticalAlignment(SwingConstants.TOP);
                 comicPic.setIcon(null);
             }
             else if (otherBox.isSelected() == true)
@@ -897,18 +911,21 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
                 index += marvelVec.size();
                 String info = cl.cmicList[index].getStrComicComment();
                 comicPic.setText(info);
+                comicPic.setVerticalAlignment(SwingConstants.TOP);
                 comicPic.setIcon(null);
             }
             else if (dcBox.isSelected() == true)
             {
                 String info = cl.cmicList[index].getStrComicComment();
                 comicPic.setText(info);
+                comicPic.setVerticalAlignment(SwingConstants.TOP);
                 comicPic.setIcon(null);
             }   
             else
             {   
                 String info = cl.cmicList[index].getStrComicComment();
                 comicPic.setText(info);
+                comicPic.setVerticalAlignment(SwingConstants.TOP);
                 comicPic.setIcon(null);
             }
         }
@@ -925,6 +942,7 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
             {
                 String imageName;
                 imageName = cl.cmicList[index].getStrComicCover();
+                comicPic.setVerticalAlignment(SwingConstants.CENTER);
                 comicPic.setIcon(new ImageIcon(imageName));
                 comicPic.setText(null);
             }
@@ -932,6 +950,7 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
             {
                 String imageName;
                 imageName = cl.cmicList[index].getStrComicCover();
+                comicPic.setVerticalAlignment(SwingConstants.CENTER);
                 comicPic.setIcon(new ImageIcon(imageName));
                 comicPic.setText(null);
             }
@@ -940,6 +959,7 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
                 index += dcVec.size();
                 String imageName;
                 imageName = cl.cmicList[index].getStrComicCover();
+                comicPic.setVerticalAlignment(SwingConstants.CENTER);
                 comicPic.setIcon(new ImageIcon(imageName));
                 comicPic.setText(null);
             }
@@ -948,6 +968,7 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
                 index += dcVec.size();
                 String imageName;
                 imageName = cl.cmicList[index].getStrComicCover();
+                comicPic.setVerticalAlignment(SwingConstants.CENTER);
                 comicPic.setIcon(new ImageIcon(imageName));
                 comicPic.setText(null);
             }
@@ -957,6 +978,7 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
                 index += marvelVec.size();
                 String imageName;
                 imageName = cl.cmicList[index].getStrComicCover();
+                comicPic.setVerticalAlignment(SwingConstants.CENTER);
                 comicPic.setIcon(new ImageIcon(imageName));
                 comicPic.setText(null);
             }
@@ -964,6 +986,7 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
             {
                 String imageName;
                 imageName = cl.cmicList[index].getStrComicCover();
+                comicPic.setVerticalAlignment(SwingConstants.CENTER);
                 comicPic.setIcon(new ImageIcon(imageName));
                 comicPic.setText(null);
             }   
@@ -971,6 +994,7 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
             {
                 String imageName;
                 imageName = cl.cmicList[index].getStrComicCover();
+                comicPic.setVerticalAlignment(SwingConstants.CENTER);
                 comicPic.setIcon(new ImageIcon(imageName));
                 comicPic.setText(null); 
             }
