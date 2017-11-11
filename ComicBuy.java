@@ -21,7 +21,7 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
 {
     ComicList cl = new ComicList();
     JPanel keyPadPanel, enterPanel, employeePanel, blank1Panel, blank2Panel, bottomPanel, middlePanel, middle2Panel, paymentPanel, creditCardPanel;
-    JPanel deliveryPanel, topPanel, publisherPanel, numbToAddPanel, overallPanel;
+    JPanel deliveryPanel, topPanel, publisherPanel, numbToAddPanel, overallPanel, comicPicPanel;
     JButton JBut[] = new JButton[10];
     JButton enterBut, resetBut, clearBut, clearAllBut, submitBut, buyBut;
     JCheckBox allBox, marvelBox, dcBox, otherBox;
@@ -62,6 +62,7 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
         publisherPanel = new JPanel (new GridLayout (2,2));
         numbToAddPanel = new JPanel (new GridLayout (3,1));
         overallPanel = new JPanel (new GridLayout (4,1));
+        comicPicPanel = new JPanel(new GridLayout(1,1));
 
         enterBut = new JButton ("Enter");
         resetBut = new JButton ("Reset");
@@ -182,7 +183,7 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
         comicDispList.setBorder(new TitledBorder("Comic Title"));
         comicPic.setBackground(Color.YELLOW);
         comicPicBorder2 = new CompoundBorder(comicPicBorder, comicPicBorder2);
-        comicPic.setBorder(comicPicBorder2);
+        //comicPic.setBorder(comicPicBorder2);
         //comicPic.setForeground(Color.YELLOW);
         totalText.setBackground(Color.CYAN);
         totalText.setOpaque(true);
@@ -197,7 +198,7 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
         comicPicBorder.setTitleJustification(TitledBorder.CENTER);
         comicDispList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         comicSelList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        comicPic.setOpaque(false);
+        comicPic.setOpaque(true);
         buyBut.setIcon(new ImageIcon("buyLogo1.gif"));
         comicPic.setHorizontalAlignment(JLabel.CENTER);
         enterBut.setFont(normalFont);
@@ -220,6 +221,8 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
         numCopyDropDown.setFont(normalFont);
         delivery.add(outsideRadio);
         delivery.add(withinRadio);
+        comicPicPanel.add(comicPicScroll);
+        comicPicPanel.setBorder(comicPicBorder);
 
         enterPanel.add(resetBut);
         enterPanel.add(enterBut);
@@ -250,7 +253,7 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
         deliveryPanel.add(outsideRadio);
         middlePanel.add(deliveryPanel);
         middlePanel.add(buyBut);
-        middlePanel.add(comicPicScroll);
+        middlePanel.add(comicPicPanel);
         topPanel.add(publisherPanel);
         topPanel.add(comicDispScroll);
         topPanel.add(numbToAddPanel);   
@@ -439,7 +442,6 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
                 visPasswordStr += "*";
                 passwordText.setText(visPasswordStr);
             }
-            //change to e
             else if (e.getSource() == JBut[4])
             {
                 passwordStr += "e";
