@@ -65,7 +65,6 @@ public class UpdateFrame extends JFrame
         stockSlider.setMajorTickSpacing(5);
         stockSlider.createStandardLabels(5);
         stockSlider.setPaintLabels(true);
-        
 
         tFPanel.add(stockText);
         tFPanel.add(blankPanel[5]);
@@ -94,8 +93,7 @@ public class UpdateFrame extends JFrame
     {
         UpdateFrame uf = new UpdateFrame();
         uf.createScreen();
-        uf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        uf.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         uf.setSize(1366,768);
         uf.setVisible(true);
 
