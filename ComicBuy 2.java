@@ -242,34 +242,6 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
         con.add(overallPanel);
     }
 
-    public int CheckComicSelected (int index)
-    {
-        if (marvelBox.isSelected() == true && otherBox.isSelected() == true && dcBox.isSelected() == false)
-        {
-            index += dcVec.size();
-        }
-        if (dcBox.isSelected() == true && otherBox.isSelected() == true && marvelBox.isSelected() == false)
-        {
-            if (index >= dcVec.size())
-            {
-                index += marvelVec.size();
-            }
-        }
-        if (marvelBox.isSelected() == true && otherBox.isSelected() == false && dcBox.isSelected() == false)
-        {
-            index += dcVec.size();
-        }
-        if (otherBox.isSelected() == true && dcBox.isSelected() == false && marvelBox.isSelected() == false)
-        {
-            index += dcVec.size();
-            index += marvelVec.size();
-        }
-        else
-        {
-        }
-        return index;
-    }
-
     public void actionPerformed (ActionEvent e)
     {
         
@@ -287,21 +259,135 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
                 index = comicDispList.getSelectedIndex();
                 info = comicDispList.getSelectedValue().toString();
                 stock = cl.cmicList[index].getIntComicStock();
-                index = CheckComicSelected(index);
-                if (numCopy <= stock)
+                if (marvelBox.isSelected() == true && dcBox.isSelected() == true && otherBox.isSelected() == true)
                 {
-                    pricePer = cl.cmicList[index].getDoubComicPrice();
-                    totalPrice += pricePer*numCopy;
-                    purchPriceVec.add(pricePer*numCopy);
-                    selectedObj = info + " (" + numCopy + ") $" + pricePer*numCopy; 
-                    comicSelVec.add(selectedObj);
-                    comicSelList.setListData(comicSelVec);
-                    stockVec.add(numCopy);
-                    selectIndexVec.add(index);
-                    cl.cmicList[index].setIntComicStock(stock - numCopy);
-                    stockText.setText("Stock: " + Integer.toString(stock-numCopy));
-                    delivered = totalPrice + deliveryFee;
-                    totalText.setText("Total: $" + twoDec.format(totalPrice) + " plus Delivery is: $" + twoDec.format(delivered));
+                    if (numCopy <= stock)
+                    {
+                        pricePer = cl.cmicList[index].getDoubComicPrice();
+                        totalPrice += pricePer*numCopy;
+                        purchPriceVec.add(pricePer*numCopy);
+                        selectedObj = info + " (" + numCopy + ") $" + pricePer*numCopy; 
+                        comicSelVec.add(selectedObj);
+                        comicSelList.setListData(comicSelVec);
+                        stockVec.add(numCopy);
+                        selectIndexVec.add(index);
+                        cl.cmicList[index].setIntComicStock(stock - numCopy);
+                        stockText.setText("Stock: " + Integer.toString(stock-numCopy));
+                        delivered = totalPrice + deliveryFee;
+                        totalText.setText("Total: $" + twoDec.format(totalPrice) + " plus Delivery is: $" + twoDec.format(delivered));
+                    }
+                }
+                else if (dcBox.isSelected() == true && marvelBox.isSelected() == true)
+                {
+                    if (numCopy <= stock)
+                    {
+                        pricePer = cl.cmicList[index].getDoubComicPrice();
+                        totalPrice += pricePer*numCopy;
+                        purchPriceVec.add(pricePer*numCopy);
+                        selectedObj = info + " (" + numCopy + ") $" + pricePer*numCopy; 
+                        comicSelVec.add(selectedObj);
+                        comicSelList.setListData(comicSelVec);
+                        stockVec.add(numCopy);
+                        selectIndexVec.add(index);
+                        cl.cmicList[index].setIntComicStock(stock - numCopy);
+                        stockText.setText("Stock: " + Integer.toString(stock-numCopy));
+                        delivered = totalPrice + deliveryFee;
+                        totalText.setText("Total: $" + twoDec.format(totalPrice) + " plus Delivery is: $" + twoDec.format(delivered));
+                    }
+                }
+                else if (marvelBox.isSelected() == true && otherBox.isSelected() == true)
+                {   
+                    index += dcVec.size();
+                    if (numCopy<= stock)
+                    {
+                        pricePer = cl.cmicList[index].getDoubComicPrice();
+                        totalPrice += pricePer*numCopy;
+                        purchPriceVec.add(pricePer*numCopy);
+                        selectedObj = info + " (" + numCopy + ") $" + pricePer*numCopy; 
+                        comicSelVec.add(selectedObj);
+                        comicSelList.setListData(comicSelVec);
+                        stockVec.add(numCopy);
+                        selectIndexVec.add(index);
+                        cl.cmicList[index].setIntComicStock(stock - numCopy);
+                        stockText.setText("Stock: " + Integer.toString(stock-numCopy));
+                        delivered = totalPrice + deliveryFee;
+                        totalText.setText("Total: $" + twoDec.format(totalPrice) + " plus Delivery is: $" + twoDec.format(delivered));
+                    }
+                }
+                else if (marvelBox.isSelected() == true)
+                {  
+                    index += dcVec.size();
+                    if (numCopy <= stock)
+                    {
+                        pricePer = cl.cmicList[index].getDoubComicPrice();
+                        totalPrice += pricePer*numCopy;
+                        purchPriceVec.add(pricePer*numCopy);
+                        selectedObj = info + " (" + numCopy + ") $" + pricePer*numCopy; 
+                        comicSelVec.add(selectedObj);
+                        comicSelList.setListData(comicSelVec);
+                        stockVec.add(numCopy);
+                        selectIndexVec.add(index);
+                        cl.cmicList[index].setIntComicStock(stock - numCopy);
+                        stockText.setText("Stock: " + Integer.toString(stock-numCopy));
+                        delivered = totalPrice + deliveryFee;
+                        totalText.setText("Total: $" + twoDec.format(totalPrice) + " plus Delivery is: $" + twoDec.format(delivered));
+                    }
+                }
+                else if (otherBox.isSelected() == true)
+                {  
+                    index += dcVec.size();
+                    index += marvelVec.size();
+                    if (numCopy <= stock)
+                    {
+                        pricePer = cl.cmicList[index].getDoubComicPrice();
+                        totalPrice += pricePer*numCopy;
+                        purchPriceVec.add(pricePer*numCopy);
+                        selectedObj = info + " (" + numCopy + ") $" + pricePer*numCopy; 
+                        comicSelVec.add(selectedObj);
+                        comicSelList.setListData(comicSelVec);
+                        stockVec.add(numCopy);
+                        selectIndexVec.add(index);
+                        cl.cmicList[index].setIntComicStock(stock - numCopy);
+                        stockText.setText("Stock: " + Integer.toString(stock-numCopy));
+                        delivered = totalPrice + deliveryFee;
+                        totalText.setText("Total: $" + twoDec.format(totalPrice) + " plus Delivery is: $" + twoDec.format(delivered));
+                    }
+                }
+                else if (dcBox.isSelected() == true)
+                {
+                    if (numCopy <= stock)
+                    {
+                        pricePer = cl.cmicList[index].getDoubComicPrice();
+                        totalPrice += pricePer*numCopy;
+                        purchPriceVec.add(pricePer*numCopy);
+                        selectedObj = info + " (" + numCopy + ") $" + pricePer*numCopy; 
+                        comicSelVec.add(selectedObj);
+                        comicSelList.setListData(comicSelVec);
+                        stockVec.add(numCopy);
+                        selectIndexVec.add(index);
+                        cl.cmicList[index].setIntComicStock(stock - numCopy);
+                        stockText.setText("Stock: " + Integer.toString(stock-numCopy));
+                        delivered = totalPrice + deliveryFee;
+                        totalText.setText("Total: $" + twoDec.format(totalPrice) + " plus Delivery is: $" + twoDec.format(delivered));
+                    }
+                }   
+                else
+                {
+                    if (numCopy <= stock)
+                    {
+                        pricePer = cl.cmicList[index].getDoubComicPrice();
+                        totalPrice += pricePer*numCopy;
+                        purchPriceVec.add(pricePer*numCopy);
+                        selectedObj = info + " (" + numCopy + ") $" + pricePer*numCopy; 
+                        comicSelVec.add(selectedObj);
+                        comicSelList.setListData(comicSelVec);
+                        stockVec.add(numCopy);
+                        selectIndexVec.add(index);
+                        cl.cmicList[index].setIntComicStock(stock - numCopy);
+                        stockText.setText("Stock: " + Integer.toString(stock-numCopy));
+                        delivered = totalPrice + deliveryFee;
+                        totalText.setText("Total: $" + twoDec.format(totalPrice) + " plus Delivery is: $" + twoDec.format(delivered));
+                    }
                 }
             }
             else if (e.getSource() == enterBut)
@@ -433,17 +519,16 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
                     marvelBox.setSelected(false);
                     dcBox.setSelected(false);
                     comicDispVec.clear();
-                    stockText.setText("Stock: ");
-                    priceText.setText ("Price: ");
                     for (int i = 0; i < indexVec.size(); i++)
                     {
                         comicDispVec.add(indexVec.get(i));
                     }
-                    allBox.setSelected(true);
+                    comicDispList.setListData(comicDispVec);
                 }
                 else
                 {
                     comicDispVec.clear();
+                    comicDispList.setListData(comicDispVec);
                 }
             }
             else if (e.getSource() == otherBox)
@@ -459,6 +544,7 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
                     {
                         comicDispVec.add(otherVec.get(i));
                     }
+                    comicDispList.setListData(comicDispVec);
                 }
                 else
                 {
@@ -466,6 +552,7 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
                     {
                         comicDispVec.remove(otherVec.get(i));
                     }
+                    comicDispList.setListData(comicDispVec);
                 }
             }
             else if (e.getSource() == marvelBox)
@@ -493,6 +580,7 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
                             comicDispVec.add(marvelVec.get(i));
                         }
                     }
+                    comicDispList.setListData(comicDispVec);
                 }
                 else
                 {
@@ -500,6 +588,7 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
                     {
                         comicDispVec.remove(marvelVec.get(i));
                     }
+                    comicDispList.setListData(comicDispVec);
                 }
             }
             else
@@ -515,6 +604,7 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
                     {
                         comicDispVec.insertElementAt(dcVec.get(i), i);
                     }
+                    comicDispList.setListData(comicDispVec);
                 }
                 else
                 {
@@ -522,9 +612,9 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
                     {
                         comicDispVec.remove(dcVec.get(i));
                     }
+                    comicDispList.setListData(comicDispVec);
                 }
             }
-            comicDispList.setListData(comicDispVec);
         }
         else
         {
@@ -560,21 +650,115 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
                 else
                 {
                     index = comicDispList.getSelectedIndex();
-                    index = CheckComicSelected(index);
-                    issue = cl.cmicList[index].getIntComicIssue();
-                    stock = cl.cmicList[index].getIntComicStock();
-                    price = cl.cmicList[index].getDoubComicPrice();
-                    imageName = cl.cmicList[index].getStrComicCover();
-                    title = cl.cmicList[index].getStrComicTitle();
-                    comicPic.setIcon(new ImageIcon(imageName));
-                    issueStr = Integer.toString(issue);
-                    comicPicBorder.setTitle(title + " #" + issueStr);
-                    comicPicPanel.repaint();
-                    stockStr = Integer.toString(stock);
-                    priceStr = Double.toString(price);
-                    stockText.setText("Stock: " + stockStr);
-                    priceText.setText("Price: $" + priceStr);
-                                  
+                    if (marvelBox.isSelected() == true && dcBox.isSelected() == true && otherBox.isSelected() == true)
+                    {
+                        issue = cl.cmicList[index].getIntComicIssue();
+                        stock = cl.cmicList[index].getIntComicStock();
+                        price = cl.cmicList[index].getDoubComicPrice();
+                        imageName = cl.cmicList[index].getStrComicCover();
+                        title = cl.cmicList[index].getStrComicTitle();
+                        comicPic.setIcon(new ImageIcon(imageName));
+                        issueStr = Integer.toString(issue);
+                        comicPicBorder.setTitle(title + " #" + issueStr);
+                        stockStr = Integer.toString(stock);
+                        priceStr = Double.toString(price);
+                        stockText.setText("Stock: " + stockStr);
+                        priceText.setText("Price: $" + priceStr);
+                    }
+                    else if (dcBox.isSelected() == true && marvelBox.isSelected() == true)
+                    {
+                        issue = cl.cmicList[index].getIntComicIssue();
+                        stock = cl.cmicList[index].getIntComicStock();
+                        price = cl.cmicList[index].getDoubComicPrice();
+                        imageName = cl.cmicList[index].getStrComicCover();
+                        title = cl.cmicList[index].getStrComicTitle();
+                        comicPic.setIcon(new ImageIcon(imageName));
+                        issueStr = Integer.toString(issue);
+                        comicPicBorder.setTitle(title + " #" + issueStr);
+                        stockStr = Integer.toString(stock);
+                        priceStr = Double.toString(price);
+                        stockText.setText("Stock: " + stockStr);
+                        priceText.setText("Price: $" + priceStr);
+                    }
+                    else if (marvelBox.isSelected() == true && otherBox.isSelected() == true)
+                    {
+                        index += dcVec.size();
+                        issue = cl.cmicList[index].getIntComicIssue();
+                        stock = cl.cmicList[index].getIntComicStock();
+                        price = cl.cmicList[index].getDoubComicPrice();
+                        imageName = cl.cmicList[index].getStrComicCover();
+                        title = cl.cmicList[index].getStrComicTitle();
+                        comicPic.setIcon(new ImageIcon(imageName));
+                        issueStr = Integer.toString(issue);
+                        comicPicBorder.setTitle(title + " #" + issueStr);
+                        stockStr = Integer.toString(stock);
+                        priceStr = Double.toString(price);
+                        stockText.setText("Stock: " + stockStr);
+                        priceText.setText("Price: $" + priceStr);
+                    }
+                    else if (marvelBox.isSelected() == true)
+                    {
+                        index += dcVec.size();
+                        issue = cl.cmicList[index].getIntComicIssue();
+                        stock = cl.cmicList[index].getIntComicStock();
+                        price = cl.cmicList[index].getDoubComicPrice();
+                        imageName = cl.cmicList[index].getStrComicCover();
+                        title = cl.cmicList[index].getStrComicTitle();
+                        comicPic.setIcon(new ImageIcon(imageName));
+                        issueStr = Integer.toString(issue);
+                        comicPicBorder.setTitle(title + " #" + issueStr);
+                        stockStr = Integer.toString(stock);
+                        priceStr = Double.toString(price);
+                        stockText.setText("Stock: " + stockStr);
+                        priceText.setText("Price: $" + priceStr);
+                    }
+                    else if (otherBox.isSelected() == true)
+                    {
+                        index += dcVec.size();
+                        index += marvelVec.size();
+                        issue = cl.cmicList[index].getIntComicIssue();
+                        stock = cl.cmicList[index].getIntComicStock();
+                        price = cl.cmicList[index].getDoubComicPrice();
+                        imageName = cl.cmicList[index].getStrComicCover();
+                        title = cl.cmicList[index].getStrComicTitle();
+                        comicPic.setIcon(new ImageIcon(imageName));
+                        issueStr = Integer.toString(issue);
+                        comicPicBorder.setTitle(title + " #" + issueStr);
+                        stockStr = Integer.toString(stock);
+                        priceStr = Double.toString(price);
+                        stockText.setText("Stock: " + stockStr);
+                        priceText.setText("Price: $" + priceStr);
+                    }
+                    else if (dcBox.isSelected() == true)
+                    {
+                        issue = cl.cmicList[index].getIntComicIssue();
+                        stock = cl.cmicList[index].getIntComicStock();
+                        price = cl.cmicList[index].getDoubComicPrice();
+                        imageName = cl.cmicList[index].getStrComicCover();
+                        title = cl.cmicList[index].getStrComicTitle();
+                        comicPic.setIcon(new ImageIcon(imageName));
+                        issueStr = Integer.toString(issue);
+                        comicPicBorder.setTitle(title + " #" + issueStr);
+                        stockStr = Integer.toString(stock);
+                        priceStr = Double.toString(price);
+                        stockText.setText("Stock: " + stockStr);
+                        priceText.setText("Price: $" + priceStr);
+                    }   
+                    else
+                    {
+                        issue = cl.cmicList[index].getIntComicIssue();
+                        stock = cl.cmicList[index].getIntComicStock();
+                        price = cl.cmicList[index].getDoubComicPrice();
+                        imageName = cl.cmicList[index].getStrComicCover();
+                        title = cl.cmicList[index].getStrComicTitle();
+                        comicPic.setIcon(new ImageIcon(imageName));
+                        issueStr = Integer.toString(issue);
+                        comicPicBorder.setTitle(title + " #" + issueStr);
+                        stockStr = Integer.toString(stock);
+                        priceStr = Double.toString(price);
+                        stockText.setText("Stock: " + stockStr);
+                        priceText.setText("Price: $" + priceStr);
+                    }                 
                 }
             }
         }
@@ -588,11 +772,59 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
         else
         {
             int index = comicDispList.getSelectedIndex();
-            index = CheckComicSelected(index);
-            String info = cl.cmicList[index].getStrComicComment();
-            comicPic.setText(info);
-            comicPic.setVerticalAlignment(SwingConstants.TOP);
-            comicPic.setIcon(null);
+            if (marvelBox.isSelected() == true && dcBox.isSelected() == true && otherBox.isSelected() == true)
+            {
+                String info = cl.cmicList[index].getStrComicComment();
+                comicPic.setText(info);
+                comicPic.setVerticalAlignment(SwingConstants.TOP);
+                comicPic.setIcon(null);
+            }
+            else if (dcBox.isSelected() == true && marvelBox.isSelected() == true)
+            {
+                String info = cl.cmicList[index].getStrComicComment();
+                comicPic.setText(info);
+                comicPic.setVerticalAlignment(SwingConstants.TOP);
+                comicPic.setIcon(null);
+            }
+            else if (marvelBox.isSelected() == true && otherBox.isSelected() == true)
+            {
+                index += dcVec.size();
+                String info = cl.cmicList[index].getStrComicComment();
+                comicPic.setText(info);
+                comicPic.setVerticalAlignment(SwingConstants.TOP);
+                comicPic.setIcon(null);
+            }
+            else if (marvelBox.isSelected() == true)
+            {
+                index += dcVec.size();
+                String info = cl.cmicList[index].getStrComicComment();
+                comicPic.setText(info);
+                comicPic.setVerticalAlignment(SwingConstants.TOP);
+                comicPic.setIcon(null);
+            }
+            else if (otherBox.isSelected() == true)
+            {
+                index += dcVec.size();
+                index += marvelVec.size();
+                String info = cl.cmicList[index].getStrComicComment();
+                comicPic.setText(info);
+                comicPic.setVerticalAlignment(SwingConstants.TOP);
+                comicPic.setIcon(null);
+            }
+            else if (dcBox.isSelected() == true)
+            {
+                String info = cl.cmicList[index].getStrComicComment();
+                comicPic.setText(info);
+                comicPic.setVerticalAlignment(SwingConstants.TOP);
+                comicPic.setIcon(null);
+            }
+            else
+            {
+                String info = cl.cmicList[index].getStrComicComment();
+                comicPic.setText(info);
+                comicPic.setVerticalAlignment(SwingConstants.TOP);
+                comicPic.setIcon(null);
+            }
         }
     }
     public void mouseExited(MouseEvent e)
@@ -603,12 +835,66 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
         else
         {
             int index = comicDispList.getSelectedIndex();
-            index = CheckComicSelected(index);
-            String imageName;
-            imageName = cl.cmicList[index].getStrComicCover();
-            comicPic.setVerticalAlignment(SwingConstants.CENTER);
-            comicPic.setIcon(new ImageIcon(imageName));
-            comicPic.setText(null);
+            if (marvelBox.isSelected() == true && dcBox.isSelected() == true && otherBox.isSelected() == true)
+            {
+                String imageName;
+                imageName = cl.cmicList[index].getStrComicCover();
+                comicPic.setVerticalAlignment(SwingConstants.CENTER);
+                comicPic.setIcon(new ImageIcon(imageName));
+                comicPic.setText(null);
+            }
+            else if (dcBox.isSelected() == true && marvelBox.isSelected() == true)
+            {
+                String imageName;
+                imageName = cl.cmicList[index].getStrComicCover();
+                comicPic.setVerticalAlignment(SwingConstants.CENTER);
+                comicPic.setIcon(new ImageIcon(imageName));
+                comicPic.setText(null);
+            }
+            else if (marvelBox.isSelected() == true && otherBox.isSelected() == true)
+            {
+                index += dcVec.size();
+                String imageName;
+                imageName = cl.cmicList[index].getStrComicCover();
+                comicPic.setVerticalAlignment(SwingConstants.CENTER);
+                comicPic.setIcon(new ImageIcon(imageName));
+                comicPic.setText(null);
+            }
+            else if (marvelBox.isSelected() == true)
+            {
+                index += dcVec.size();
+                String imageName;
+                imageName = cl.cmicList[index].getStrComicCover();
+                comicPic.setVerticalAlignment(SwingConstants.CENTER);
+                comicPic.setIcon(new ImageIcon(imageName));
+                comicPic.setText(null);
+            }
+            else if (otherBox.isSelected() == true)
+            {
+                index += dcVec.size();
+                index += marvelVec.size();
+                String imageName;
+                imageName = cl.cmicList[index].getStrComicCover();
+                comicPic.setVerticalAlignment(SwingConstants.CENTER);
+                comicPic.setIcon(new ImageIcon(imageName));
+                comicPic.setText(null);
+            }
+            else if (dcBox.isSelected() == true)
+            {
+                String imageName;
+                imageName = cl.cmicList[index].getStrComicCover();
+                comicPic.setVerticalAlignment(SwingConstants.CENTER);
+                comicPic.setIcon(new ImageIcon(imageName));
+                comicPic.setText(null);
+            }   
+            else
+            {
+                String imageName;
+                imageName = cl.cmicList[index].getStrComicCover();
+                comicPic.setVerticalAlignment(SwingConstants.CENTER);
+                comicPic.setIcon(new ImageIcon(imageName));
+                comicPic.setText(null); 
+            }
         }
     }
     public void mouseReleased(MouseEvent e)
