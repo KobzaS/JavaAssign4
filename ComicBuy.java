@@ -21,7 +21,7 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
 {
     ComicList cl = new ComicList();
     JPanel keyPadPanel, enterPanel, employeePanel, blank1Panel, blank2Panel, bottomPanel, middlePanel, middle2Panel, paymentPanel, creditCardPanel;
-    JPanel deliveryPanel, topPanel, publisherPanel, numbToAddPanel, overallPanel, comicPicPanel;
+    JPanel deliveryPanel, topPanel, publisherPanel, numbToAddPanel, overallPanel, comicPicPanel, stockPanel;
     JButton JBut[] = new JButton[10];
     JButton enterBut, resetBut, clearBut, clearAllBut, submitBut, buyBut;
     JCheckBox allBox, marvelBox, dcBox, otherBox;
@@ -60,6 +60,7 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
         numbToAddPanel = new JPanel (new GridLayout (3,1));
         overallPanel = new JPanel (new GridLayout (4,1));
         comicPicPanel = new JPanel(new GridLayout(1,1));
+        stockPanel = new JPanel(new GridLayout(1,1));
 
         enterBut = new JButton ("Enter");
         resetBut = new JButton ("Reset");
@@ -106,7 +107,7 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
         Font normalFont = new Font ("Arial", Font.PLAIN, 14);
         
 
-        for (int i = 1; i < 8; i++)
+        for (int i = 0; i < 8; i++)
         {
             numCopyVec.add(i + " issue(s)");
         }
@@ -201,6 +202,8 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
         delivery.add(withinRadio);
         comicPicPanel.add(comicPicScroll);
         comicPicPanel.setBorder(comicPicBorder);
+        totalText.setText("Total: $0.0 plus Delivery: $0.0");
+        numCopyDropDown.setSelectedIndex(0);
 
         enterPanel.add(resetBut);
         enterPanel.add(enterBut);
@@ -224,7 +227,8 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
         publisherPanel.add(marvelBox);
         publisherPanel.add(dcBox);
         publisherPanel.add(otherBox);
-        numbToAddPanel.add(stockText);
+        stockPanel.add(stockText);
+        numbToAddPanel.add(stockPanel);
         numbToAddPanel.add(priceText);
         numbToAddPanel.add(numCopyDropDown);
         deliveryPanel.add(withinRadio);
@@ -283,40 +287,84 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
                 String info, selectedObj;
                 double pricePer = 0;
                 double delivered;
-                numCopy = numCopyDropDown.getSelectedIndex()+1;
                 index = comicDispList.getSelectedIndex();
                 info = comicDispList.getSelectedValue().toString();
                 stock = cl.cmicList[index].getIntComicStock();
                 index = CheckComicSelected(index);
-                if (numCopy <= stock)
+                if (numCopyDropDown.getSelectedIndex() > 0)
                 {
-                    pricePer = cl.cmicList[index].getDoubComicPrice();
-                    totalPrice += pricePer*numCopy;
-                    purchPriceVec.add(pricePer*numCopy);
-                    selectedObj = info + " (" + numCopy + ") $" + pricePer*numCopy; 
-                    comicSelVec.add(selectedObj);
-                    comicSelList.setListData(comicSelVec);
-                    stockVec.add(numCopy);
-                    selectIndexVec.add(index);
-                    cl.cmicList[index].setIntComicStock(stock - numCopy);
-                    stockText.setText("Stock: " + Integer.toString(stock-numCopy));
-                    delivered = totalPrice + deliveryFee;
-                    totalText.setText("Total: $" + twoDec.format(totalPrice) + " plus Delivery is: $" + twoDec.format(delivered));
+                    numCopy = numCopyDropDown.getSelectedIndex();
+                    if (numCopy <= stock)
+                    {
+                        pricePer = cl.cmicList[index].getDoubComicPrice();
+                        totalPrice += pricePer*numCopy;
+                        purchPriceVec.add(pricePer*numCopy);
+                        selectedObj = info + " (" + numCopy + ") $" + twoDec.format(pricePer*numCopy); 
+                        comicSelVec.add(selectedObj);
+                        comicSelList.setListData(comicSelVec);
+                        stockVec.add(numCopy);
+                        selectIndexVec.add(index);
+                        cl.cmicList[index].setIntComicStock(stock - numCopy);
+                        if ((stock - numCopy) == 0)
+                        {
+                            stockPanel.setBackground(Color.red);
+                        }
+                        stockText.setText("Stock: " + Integer.toString(stock-numCopy));
+                        delivered = totalPrice + deliveryFee;
+                        totalText.setText("Total: $" + twoDec.format(totalPrice) + " plus Delivery is: $" + twoDec.format(delivered));
+                    }
+                    else if (numCopy >= stock && stock != 0)
+                    {
+                        JOptionPane.showMessageDialog(this, "Not enough isses available, please re-select", "Not Allowed", JOptionPane.ERROR_MESSAGE);
+                    }
+                    else if (stock == 0)
+                    {
+                        JOptionPane.showMessageDialog(this, "No issues left, please re-select", "Not Allowed", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
+                else
+                {
+                    JOptionPane.showMessageDialog(this, "Select a number of comics to buy", "Not Allowed", JOptionPane.ERROR_MESSAGE);
+                }
+                numCopyDropDown.setSelectedIndex(0);                
             }
             else if (e.getSource() == enterBut)
             {
                 passwordText.setText(passwordStr);
                 if (passwordStr.compareToIgnoreCase("abcd") == 0)
                 {
-                    JOptionPane.showMessageDialog(null, "Well done!");
+                    JOptionPane.showMessageDialog(this, "Well done!");
                     passwordStr = "";
                     visPasswordStr = "";
                     passwordText.setText(visPasswordStr);
+                    totalPrice = 0;
+                    deliveryFee = 0;
+                    totalText.setText("Total: $" + totalPrice + " plus Delivery: $" + (totalPrice+deliveryFee));
+                    comicSelVec.clear();
+                    comicDispVec.clear();
+                    deliveryFee = 3.95;
+                    comicPicBorder.setTitle("None");
+                    stockVec.clear();
+                    selectIndexVec.clear();
+                    stockText.setText("Stock :");
+                    purchPriceVec.clear();
+                    marvelBox.setSelected(false);
+                    dcBox.setSelected(false);
+                    allBox.setSelected(false);
+                    otherBox.setSelected(false);
+                    withinRadio.setSelected(true);
+                    outsideRadio.setSelected(false);
+                    creditCardNumPF.setText("");
+                    comicSelList.repaint();
+                    comicDispList.repaint();
+                    priceText.setText("Price: ");
+                    numCopyDropDown.setSelectedIndex(0);
+                    comicPic.setIcon(null);
+                    comicPicPanel.repaint();
                 }
                 else 
                 {
-                    JOptionPane.showMessageDialog(null, "Wrong password, please re-enter", "Not Allowed", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Wrong password, please re-enter", "Not Allowed", JOptionPane.ERROR_MESSAGE);
                     passwordStr = "";
                     visPasswordStr = "";
                     passwordText.setText(visPasswordStr);
@@ -325,13 +373,14 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
             else if (e.getSource() == resetBut)
             {
                 visPasswordStr = "";
-                passwordText.setText(visPasswordStr);
+                passwordStr = "";
+                passwordText.setText(passwordStr);
             }
             else if (e.getSource() == clearBut)
             {
                 if (comicSelList.isSelectionEmpty() == true)
                 {
-                    JOptionPane.showMessageDialog(null, "No Comics Selected", "Not Allowed", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "No Comics Selected", "Not Allowed", JOptionPane.ERROR_MESSAGE);
                 }
                 else
                 {
@@ -341,7 +390,6 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
                     comicIndex = (Integer)selectIndexVec.get(selIndex);
                     clearPrice = (Double)purchPriceVec.get(selIndex);
                     comicSelVec.remove(selIndex);
-                    passwordText.setText(Double.toString(clearPrice));
                     totalPrice -= clearPrice;
                     comicSelList.setListData(comicSelVec);
                     cmicStock = cl.cmicList[comicIndex].getIntComicStock();
@@ -353,14 +401,16 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
                     comicDispList.clearSelection();
                     comicPic.setIcon(null);
                     priceText.setText("Price: ");
-                    numCopyDropDown.setSelectedIndex(-1);
+                    numCopyDropDown.setSelectedIndex(0);
+                    stockText.setText("Stock: ");
+                    stockPanel.setBackground(deliveryPanel.getBackground());
                 }
             }
             else if (e.getSource() == clearAllBut)
             {
                 if (comicSelVec.size() == 0)
                 {
-                    JOptionPane.showMessageDialog(null, "No Comics Selected", "Not Allowed", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "No Comics Selected", "Not Allowed", JOptionPane.ERROR_MESSAGE);
                 }
                 else
                 {
@@ -381,7 +431,9 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
                     comicDispList.clearSelection();
                     comicPic.setIcon(null);
                     priceText.setText("Price: ");
-                    numCopyDropDown.setSelectedIndex(-1);
+                    stockText.setText("Stock: ");
+                    numCopyDropDown.setSelectedIndex(0);
+                    stockPanel.setBackground(deliveryPanel.getBackground());
                 }
             }
             else if (e.getSource() == submitBut)
@@ -391,23 +443,23 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
                 {
                     creditCardString += creditCardNumPF.getPassword()[i];
                 }
-                int yesno = JOptionPane.showConfirmDialog(null, "Are you Sure?", "Confirmation", JOptionPane.YES_NO_OPTION);
+                int yesno = JOptionPane.showConfirmDialog(this, "Are you Sure?", "Confirmation", JOptionPane.YES_NO_OPTION);
                 if (yesno == 0)
                 {
                     if (comicSelVec.size() == 0)
                     {
                         if (creditCardString.compareTo("") == 0 || creditCardString.compareTo(" ") == 0)
                         {
-                            JOptionPane.showMessageDialog(null, "Please enter a valid credit card", "Not Allowed", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(this, "Please enter a valid credit card", "Not Allowed", JOptionPane.ERROR_MESSAGE);
                         }
                     }
                     else if (creditCardString.compareTo("") == 0 || creditCardString.compareTo(" ") == 0)
                     {
-                        JOptionPane.showMessageDialog(null, "Please enter a valid credit card", "Not Allowed", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "Please enter a valid credit card", "Not Allowed", JOptionPane.ERROR_MESSAGE);
                     }
                     else
                     {
-                        JOptionPane.showMessageDialog(null, "");
+                        JOptionPane.showMessageDialog(this, "Total: $" + twoDec.format(totalPrice+deliveryFee) + " has been charged to your card, Thank you!", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
                     }
                 }
                 
@@ -416,7 +468,7 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
             {
                 passwordStr += e.getActionCommand();
                 visPasswordStr += "*";
-                passwordText.setText(passwordStr);
+                passwordText.setText(visPasswordStr);
             }
         }
     }
@@ -533,6 +585,8 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
                 deliveryFee = 0;
                 deliveryFee += 3.95;
                 double delivered = totalPrice + deliveryFee;
+                if (comicSelVec.size() == 0)
+                    delivered = 0;
                 totalText.setText("Total: $" + totalPrice + " plus Delivery is: $" + delivered);
             }
             else if (outsideRadio.isSelected() == true)
@@ -540,6 +594,8 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
                 deliveryFee = 0;
                 deliveryFee += 7.52;
                 double delivered = totalPrice + deliveryFee;
+                if (comicSelVec.size() == 0)
+                    delivered = 0;
                 totalText.setText("Total: $" + totalPrice + " plus Delivery is: $" + delivered);
             }
         }
@@ -550,6 +606,7 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
         int index, stock, issue;
         double price;
         String stockStr, priceStr, imageName, title, issueStr;
+        char pub;
         if (e.getSource() instanceof JList)
         {
             if (e.getSource() == comicDispList)
@@ -559,10 +616,40 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
                 }
                 else
                 {
+                    
                     index = comicDispList.getSelectedIndex();
                     index = CheckComicSelected(index);
+                    pub = cl.cmicList[index].getChComicPubType();
+                    if (pub == 'm')
+                    {
+                        comicDispList.setSelectionBackground(Color.blue);
+                        comicDispList.setSelectionForeground(Color.white);
+                        comicDispList.repaint();
+                    }
+                    else if (pub == 'd')
+                    {
+                        comicDispList.setSelectionBackground(Color.red);
+                        comicDispList.setSelectionForeground(Color.white);
+                        comicDispList.repaint();
+                    }
+                    else
+                    {
+                        comicDispList.setSelectionBackground(Color.yellow);
+                        comicDispList.setSelectionForeground(Color.black);
+                        comicDispList.repaint();
+                    }
                     issue = cl.cmicList[index].getIntComicIssue();
                     stock = cl.cmicList[index].getIntComicStock();
+                    if (stock == 0)
+                    {
+                        stockPanel.setBackground(Color.red);
+                        stockPanel.repaint();
+                    }
+                    else
+                    {
+                        stockPanel.setBackground(deliveryPanel.getBackground());
+                        stockPanel.repaint();
+                    }
                     price = cl.cmicList[index].getDoubComicPrice();
                     imageName = cl.cmicList[index].getStrComicCover();
                     title = cl.cmicList[index].getStrComicTitle();
