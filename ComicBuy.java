@@ -60,6 +60,11 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
         comicPicPanel = new JPanel(new GridLayout(1,1));
         stockPanel = new JPanel(new GridLayout(1,1));
 
+        uf.createScreen(cl);
+        uf.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        uf.setTitle("Comic Update");
+        uf.setSize(1024, 576);
+
         enterBut = new JButton ("Enter");
         resetBut = new JButton ("Reset");
         clearBut = new JButton ("Clear");
@@ -330,13 +335,14 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
             {
                 if (passwordStr.compareToIgnoreCase("abcd") == 0)
                 {
-                    uf.createScreen(cl);
-                    uf.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-                    uf.setTitle("Comic Update");
-                    uf.setSize(1024, 576);
-                    uf.setVisible(true);
-                    
-                    JOptionPane.showMessageDialog(this, "Well done!");
+                    int tempIndex, tempStock;
+                    for (int i = 0; i < comicSelVec.size(); i++)
+                    {
+                        tempIndex = (Integer)selectIndexVec.get(i);
+                        tempStock = cl.cmicList[tempIndex].getIntComicStock();
+                        cl.cmicList[tempIndex].setIntComicStock(tempStock+(Integer)stockVec.get(i));
+                        totalPrice -= (Double)purchPriceVec.get(i);
+                    }
                     passwordStr = "";
                     visPasswordStr = "";
                     passwordText.setText(visPasswordStr);
@@ -364,6 +370,7 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
                     numCopyDropDown.setSelectedIndex(0);
                     comicPic.setIcon(null);
                     comicPicPanel.repaint();
+                    uf.setVisible(true);
                 }
                 else 
                 {
