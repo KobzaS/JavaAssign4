@@ -355,7 +355,7 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
                     comicPicBorder.setTitle("None");
                     stockVec.clear();
                     selectIndexVec.clear();
-                    stockText.setText("Stock :");
+                    stockText.setText("Stock: ");
                     purchPriceVec.clear();
                     marvelBox.setSelected(false);
                     dcBox.setSelected(false);
@@ -370,6 +370,8 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
                     numCopyDropDown.setSelectedIndex(0);
                     comicPic.setIcon(null);
                     comicPicPanel.repaint();
+                    stockPanel.setBackground(deliveryPanel.getBackground());
+                    stockPanel.repaint();
                     uf.setVisible(true);
                 }
                 else 
@@ -597,7 +599,7 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
                 double delivered = totalPrice + deliveryFee;
                 if (comicSelVec.size() == 0)
                     delivered = 0;
-                totalText.setText("Total: $" + totalPrice + " plus Delivery is: $" + delivered);
+                totalText.setText("Total: $" + twoDec.format(totalPrice) + " plus Delivery is: $" + twoDec.format(delivered));
             }
             else if (outsideRadio.isSelected() == true)
             {
@@ -606,7 +608,7 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
                 double delivered = totalPrice + deliveryFee;
                 if (comicSelVec.size() == 0)
                     delivered = 0;
-                totalText.setText("Total: $" + totalPrice + " plus Delivery is: $" + delivered);
+                totalText.setText("Total: $" + twoDec.format(totalPrice) + " plus Delivery is: $" + twoDec.format(delivered));
             }
         }
     }
@@ -668,7 +670,7 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
                     comicPicBorder.setTitle(title + " #" + issueStr);
                     comicPicPanel.repaint();
                     stockStr = Integer.toString(stock);
-                    priceStr = Double.toString(price);
+                    priceStr = twoDec.format(price);
                     stockText.setText("Stock: " + stockStr);
                     priceText.setText("Price: $" + priceStr);
                                   

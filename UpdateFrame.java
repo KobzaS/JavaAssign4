@@ -196,7 +196,7 @@ public class UpdateFrame extends JFrame implements ActionListener, ItemListener,
                invTextArea.setText("");
                for (int a = 0; a < comicLt.cmicList.length; a++)
                {
-                  invTextArea.append(comicLt.cmicList[a].getStrComicTitle() + " Vol: " + comicLt.cmicList[a].getIntComicVol() + " #. " + comicLt.cmicList[a].getIntComicIssue() + " Pub: " + comicLt.cmicList[a].getStrComicPub() + " ==> $" + String.valueOf(comicLt.cmicList[a].getDoubComicPrice())+"\n");
+                  invTextArea.append(comicLt.cmicList[a].getStrComicTitle() + " Vol: " + comicLt.cmicList[a].getIntComicVol() + " #. " + comicLt.cmicList[a].getIntComicIssue() + " Pub: " + comicLt.cmicList[a].getStrComicPub() + " ==> $" + String.valueOf(twoFormat.format(comicLt.cmicList[a].getDoubComicPrice()))+"\n");
                }
             }
             else if (e.getSource() == op2)
@@ -230,7 +230,7 @@ public class UpdateFrame extends JFrame implements ActionListener, ItemListener,
             indx = comicCombo.getSelectedIndex();
             stockSlider.setValue(comicLt.cmicList[indx].getIntComicStock());
             stockText.setText(String.valueOf(comicLt.cmicList[indx].getIntComicStock()));
-            comicPriceText.setText(String.valueOf(comicLt.cmicList[indx].getDoubComicPrice()));
+            comicPriceText.setText(String.valueOf(twoFormat.format(comicLt.cmicList[indx].getDoubComicPrice())));
         }
     }
     
