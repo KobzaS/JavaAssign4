@@ -8,8 +8,7 @@ import java.util.*;
 
 public class UpdateFrame extends JFrame implements ActionListener, ItemListener, ChangeListener
 {
-    ComicBuy cb = new ComicBuy();
-    ComicList comicLt = new ComicList();
+    ComicList comicLt;
     
     DecimalFormat twoFormat = new DecimalFormat("0.00"); 
     
@@ -38,9 +37,9 @@ public class UpdateFrame extends JFrame implements ActionListener, ItemListener,
 
     Container con;
 
-    public void createScreen()
+    public void createScreen(ComicList cl)
     {
-        comicLt.createList();
+        comicLt = cl;
         con = getContentPane();
         
         // Create JPanels
@@ -241,15 +240,5 @@ public class UpdateFrame extends JFrame implements ActionListener, ItemListener,
             // Set stockText to match value of stockSlider
             stockText.setText(String.valueOf(stockSlider.getValue()));
         }
-    }
-    
-    public static void main (String args[])
-    {
-        UpdateFrame uf = new UpdateFrame();
-        uf.createScreen();
-        uf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        uf.setTitle("Comic Update");
-        uf.setSize(1024, 576);
-        uf.setVisible(true);
     }
 }

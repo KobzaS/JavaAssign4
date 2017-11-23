@@ -1,8 +1,5 @@
 /*
 To Do List:
-Add a Vector or Array to keep track of the original index for each item added to the selected list
-Add a Vector or Array to keep track of stock as things go so that as different comics are added, can reset back to that when clear is hit
-Add Functionality to SubmitButton
 After entering the password, clear all forms and then open up UpdateFrame
 Add Comments to help distinguish
 Make sure that formatting is right
@@ -20,6 +17,7 @@ import javax.swing.event.ListSelectionListener;
 public class ComicBuy extends JFrame implements ActionListener, ItemListener, ListSelectionListener, MouseListener
 {
     ComicList cl = new ComicList();
+    UpdateFrame uf = new UpdateFrame();
     JPanel keyPadPanel, enterPanel, employeePanel, blank1Panel, blank2Panel, bottomPanel, middlePanel, middle2Panel, paymentPanel, creditCardPanel;
     JPanel deliveryPanel, topPanel, publisherPanel, numbToAddPanel, overallPanel, comicPicPanel, stockPanel;
     JButton JBut[] = new JButton[10];
@@ -330,9 +328,14 @@ public class ComicBuy extends JFrame implements ActionListener, ItemListener, Li
             }
             else if (e.getSource() == enterBut)
             {
-                passwordText.setText(passwordStr);
                 if (passwordStr.compareToIgnoreCase("abcd") == 0)
                 {
+                    uf.createScreen(cl);
+                    uf.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                    uf.setTitle("Comic Update");
+                    uf.setSize(1024, 576);
+                    uf.setVisible(true);
+                    
                     JOptionPane.showMessageDialog(this, "Well done!");
                     passwordStr = "";
                     visPasswordStr = "";
