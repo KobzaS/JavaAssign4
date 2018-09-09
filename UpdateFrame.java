@@ -9,6 +9,7 @@ import java.util.*;
 
 public class UpdateFrame extends JFrame implements ActionListener, ItemListener, ChangeListener
 {
+    static final long serialVersionUID = 42L;
     ComicList comicLt;
     
     DecimalFormat twoFormat = new DecimalFormat("0.00"); 
@@ -20,7 +21,7 @@ public class UpdateFrame extends JFrame implements ActionListener, ItemListener,
     JPanel stockPanel, bottomPanel, topPanel, middlePanel, overallPanel, sliderAndTF, tFPanel, comicPanel;
     JPanel blankPanel[] = new JPanel [6];
     
-    JComboBox comicCombo;
+    JComboBox<ComicInfo> comicCombo;
     JButton updateInvBut;
     JTextArea invTextArea;
     JScrollPane invScroll;
@@ -29,7 +30,7 @@ public class UpdateFrame extends JFrame implements ActionListener, ItemListener,
     JTextField stockText, comicPriceText;
     TitledBorder invBorder;
     
-    Vector comicVec;
+    Vector<ComicInfo> comicVec;
     
     int stockInt;
     int indx = 0;
@@ -78,11 +79,10 @@ public class UpdateFrame extends JFrame implements ActionListener, ItemListener,
         invBorder.setTitleJustification(TitledBorder.RIGHT);
         
         // Initialize vector and add comics to it
-        comicVec = new Vector();
+        comicVec = new Vector<ComicInfo>();
         for (int i = 0; i < comicLt.cmicList.length; i++)
         {
-            tempStr = comicLt.cmicList[i].getStrComicTitle() + " Vol: " + comicLt.cmicList[i].getIntComicVol() + " #. " + comicLt.cmicList[i].getIntComicIssue() + " Pub: " + comicLt.cmicList[i].getStrComicPub();
-            comicVec.add(tempStr); 
+            comicVec.add(comicLt.cmicList[i]); 
         }
         
         // Initialize bottom components
@@ -108,7 +108,7 @@ public class UpdateFrame extends JFrame implements ActionListener, ItemListener,
         lockBox = new JCheckBox("Lock", true);
         stockText = new JTextField(1); 
         stockText.setEditable(false);
-        comicCombo = new JComboBox(comicVec);  
+        comicCombo = new JComboBox<ComicInfo>(comicVec);  
         
         // Set initial values
         comicPriceText.setText(String.valueOf(comicLt.cmicList[0].getDoubComicPrice()));
